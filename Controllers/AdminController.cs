@@ -1,6 +1,7 @@
 ﻿using cms_net.Context;
 using cms_net.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace cms_net.Controllers
 {
@@ -37,6 +38,7 @@ namespace cms_net.Controllers
             {
                 ComponentDefinition install = new ComponentDefinition() { Key = name };
                 db.ComponentDefinitions.Add(install);
+                db.SaveChanges();
             }
             return View("ComponentList");
         }
@@ -45,10 +47,11 @@ namespace cms_net.Controllers
         {
             using (CMSContext db = new CMSContext())
             {
-                ComponentDefinition toUninstall = (ComponentDefinition)db.ComponentDefinitions.Where(comp => comp.Key == name);
+                ComponentDefinition toUninstall = db.ComponentDefinitions.Where(comp => comp.Key == name).First();
                 if(toUninstall != null)
                 {
                     db.ComponentDefinitions.Remove(toUninstall);
+                    db.SaveChanges();
                 }
                 else
                 {

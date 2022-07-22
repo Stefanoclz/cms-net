@@ -14,8 +14,10 @@
         </th>
     </thead>
     <tbody>
-        @foreach(string str in componentList)
+        @if(componentList != null)
         {
+            @foreach(string str in componentList)
+            {
             <tr>
                 <td>
                     @str
@@ -24,7 +26,9 @@
                     <a href="@Url.Action("InstallComponent","Admin", new {name = str})">Installa</a> | <a href="@Url.Action("UninstallComponent","Admin", new {name = str})">Disinstalla</a>
                 </td>
             </tr>
+            }
         }
+        
     </tbody>
 </table>
 
