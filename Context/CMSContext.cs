@@ -1,9 +1,11 @@
 ﻿using cms_net.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace cms_net.Context
 {
-    public class CMSContext : DbContext
+    public class CMSContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Page> Pages { get; set; }
         public DbSet<Component> Components { get; set; }
@@ -13,6 +15,12 @@ namespace cms_net.Context
         public CMSContext()
         {
         }
+
+        public CMSContext(DbContextOptions<CMSContext> options) : base(options)
+        {
+
+        }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

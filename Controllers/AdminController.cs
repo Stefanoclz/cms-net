@@ -1,10 +1,12 @@
 ﻿using cms_net.Context;
 using cms_net.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace cms_net.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         public IActionResult Index()
