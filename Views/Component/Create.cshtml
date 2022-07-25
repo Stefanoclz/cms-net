@@ -1,0 +1,24 @@
+﻿
+@model Component
+
+<form asp-controller="Component" asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    
+    @if(@Model.Fields != null && @Model.Fields.Count() > 0)
+    {
+        @foreach(Field str in @Model.Fields)
+        {
+            <div class="mb-3">
+                <strong>@str.Name</strong>
+                <input asp-for="@str.Name" class="d-block w-100" />
+            </div>
+        }
+    }
+
+
+    <div class="text-end">
+        <input type="submit" class="btn btn-small btn-info" value="Salva">
+    </div>
+</form>
+
+<a class="btn-primary rounded-pill py-2 px-4" href="/Page/Index">Indietro</a>

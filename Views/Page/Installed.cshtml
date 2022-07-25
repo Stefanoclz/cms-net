@@ -12,7 +12,7 @@
     {
         <div class="mb-3 d-flex">
             <span>@comp.Key</span>
-            <a href="/Component/Create/pageId[0]">Aggiungi</a>
+            <a href="@Url.Action("Create","Component",new{pageId = pageId, key = comp.Key})">Aggiungi</a>
         </div>
     }
 }
