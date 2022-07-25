@@ -1,11 +1,45 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿
+@model List<Page>
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Pages View</h1>
 </div>
 
-<partial name="Components/Card/View" />
-@Html.Partial("Components/Visore/View");
+@*<partial name="Components/Card/View" />
+@Html.Partial("Components/Visore/View");*@
+<div class="container">
+    <a href="/Page/Create">Crea nuova pagina</a>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Page Name</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+            @if(@Model != null && @Model.Count > 0)
+            {
+                @foreach(Page p in @Model)
+                {
+                    <tr>
+                      <td>@p.Title</td>
+                      <td>
+                          <a href="@Url.Action("Edit","Page",new{pageId = p.Id})">Edit</a> | <a href="@Url.Action("Detail","Page",new{pageId = p.Id})">Detail</a>
+                      </td>
+                     </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <h2>
+                        Non sono ancora state create pagine!
+                    </h2>
+                </tr>
+            }
+            
+    
+   
+  </tbody>
+</table>
+</div>

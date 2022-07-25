@@ -40,14 +40,14 @@ namespace cms_net.Controllers
                 db.ComponentDefinitions.Add(install);
                 db.SaveChanges();
             }
-            return View("ComponentList");
+            return RedirectToAction("ComponentList");
         }
 
         public IActionResult UninstallComponent(string name)
         {
             using (CMSContext db = new CMSContext())
             {
-                ComponentDefinition toUninstall = db.ComponentDefinitions.Where(comp => comp.Key == name).First();
+                ComponentDefinition toUninstall = db.ComponentDefinitions.Where(comp => comp.Key == name).FirstOrDefault();
                 if(toUninstall != null)
                 {
                     db.ComponentDefinitions.Remove(toUninstall);

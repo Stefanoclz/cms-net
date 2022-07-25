@@ -1,0 +1,55 @@
+﻿
+@model Page;
+
+<h1>EDIT</h1>
+
+<form asp-controller="Page" asp-action="Edit" asp-route-id="@Model.Id" method="post">
+    @Html.AntiForgeryToken()
+    <div class="mb-3">
+        <strong>Title:</strong>
+        <input asp-for="Title" class="d-block w-100" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Key:
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (@Model.Components != null && @Model.Components.Count() > 0)
+            {
+                @foreach (Component comp in @Model.Components)
+                {
+                    <tr>
+                        <td>
+                            @comp.Key
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        <h2>
+                            Non sono presenti componenti in questa pagina!
+                        </h2>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="mb-3">
+        <a href="/Page/Installed/@Model.Id">Aggiungi nuovo componente</a>
+    </div>
+   
+
+    <div class="text-end">
+        <input type="submit" class="btn btn-small btn-success" value="Salva" />
+    </div>
+    <a class="btn btn-primary py-2 px-4 rounded-pill" href="/Page/Index">Indietro</a>
+</form>

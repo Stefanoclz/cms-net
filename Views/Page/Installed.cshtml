@@ -1,0 +1,24 @@
+﻿@model List<ComponentDefinition>;
+
+@{
+    var pageId = ViewData["id"] as List<int>;
+}
+
+<h1>Quali componenti vuoi aggiungere?</h1>
+
+@if(@Model != null && @Model.Count() > 0)
+{
+    @foreach(ComponentDefinition comp in @Model)
+    {
+        <div class="mb-3 d-flex">
+            <span>@comp.Key</span>
+            <a href="/Component/Create/pageId[0]">Aggiungi</a>
+        </div>
+    }
+}
+else
+{
+    <h2>
+        Non ci sono componenti abilitati alla creazione, contatta il tuo Admin e riprova!
+    </h2>
+}
