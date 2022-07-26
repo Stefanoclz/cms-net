@@ -110,10 +110,17 @@ namespace cms_net.Controllers
             using (CMSContext db = new CMSContext())
             {
                 List<ComponentDefinition> compList = db.ComponentDefinitions.ToList();
-                List<int> found = new List<int>();
-                found.Add(pageId);
-                ViewData["id"] = found;
-                return View(compList);
+                List<Component> comps = new List<Component>();
+                foreach (ComponentDefinition comp in compList)
+                {
+                    Component nuovo = new Component();
+                    nuovo.Key = comp.Key;
+                    nuovo.PageId = pageId;
+                    comps.Add(nuovo);
+                }
+
+
+                return View(comps);
             }
 
         }

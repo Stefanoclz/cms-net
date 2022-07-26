@@ -1,18 +1,16 @@
-﻿@model List<ComponentDefinition>;
+﻿@model List<Component>;
 
-@{
-    var pageId = ViewData["id"] as List<int>;
-}
 
 <h1>Quali componenti vuoi aggiungere?</h1>
 
 @if(@Model != null && @Model.Count() > 0)
 {
-    @foreach(ComponentDefinition comp in @Model)
+    @foreach(Component comp in @Model)
     {
         <div class="mb-3 d-flex">
             <span>@comp.Key</span>
-            <a href="@Url.Action("Create","Component",new{pageId = pageId, key = comp.Key})">Aggiungi</a>
+            <span>@comp.PageId</span>
+            <a href="@Url.Action("Create","Component",new{pageId = comp.PageId, key = comp.Key})">Aggiungi</a>
         </div>
     }
 }

@@ -43,13 +43,13 @@
             }
         </tbody>
     </table>
-    <div class="mb-3">
-        <a href="/Page/Installed/@Model.Id">Aggiungi nuovo componente</a>
-    </div>
    
 
     <div class="text-end">
         <input type="submit" class="btn btn-small btn-success" value="Salva" />
+    </div>
+    <div class="mb-3">
+        <a href="@Url.Action("Installed", "Page", new{pageId = Model.Id})">Aggiungi nuovo componente</a>
     </div>
     <a class="btn btn-primary py-2 px-4 rounded-pill" href="/Page/Index">Indietro</a>
 </form>

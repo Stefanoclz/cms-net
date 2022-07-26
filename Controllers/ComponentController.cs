@@ -12,13 +12,11 @@ namespace cms_net.Controllers
             return View();
         }
 
-        public IActionResult Create(int id, string key, IFormCollection collection)
+        public IActionResult Create(int pageId, string key)
 
         {
-            Component component = new Component();
-            component.PageId = id;
 
-            List<Field> input = new List<Field>();
+            List<string> input = new List<string>();
 
             string path = $"C:/Users/Stefano/source/repos/cms-net/Views/Page/Components/{key}/data.csv";
             using (TextFieldParser parser = new TextFieldParser(path))
@@ -31,15 +29,19 @@ namespace cms_net.Controllers
                     string[] fields = parser.ReadFields();
                     foreach (string field in fields)
                     {
-                        Field newField = new Field(field);
-                        input.Add(newField);
+                        input.Add(field);
                     }
                 }
 
-                component.Fields = input;
-                component.Id = id;
+                Component component = new Component();
+                component.PageId = pageId;
                 component.Key = key;
-                
+                component.Fields = new List<Field>();
+                foreach(string field in input)
+                {
+                    Field nuovo = new Field(field);
+                    component.Fields.Add(nuovo);
+                }
 
                 return View(component);
             }
@@ -47,13 +49,30 @@ namespace cms_net.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Component component)
+        public IActionResult Create(int pageId, string key, IFormCollection formData)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
             CMSContext db = new CMSContext();
 
-            db.Components.Add(component);
+            Component nuovo = new Component();
 
-            return RedirectToAction("Index", "PageController", new {pageId = component.PageId});
+            nuovo.Key = key;
+            nuovo.PageId = pageId;
+            nuovo.Fields = new List<Field>();
+            foreach (string fld in formData.Keys)
+            {
+                Field nuovoField = new Field(fld);
+                nuovo.Fields.Add(nuovoField);
+            }
+
+            db.Components.Add(nuovo);
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Page");
         }
     }
 }
